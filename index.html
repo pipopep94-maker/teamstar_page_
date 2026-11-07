@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team STARPARK — Comunidad Oficial</title>
+    <!-- CSS Principal -->
+    <link rel="stylesheet" href="assets/css/style.css">
+    <!-- Font Awesome para Iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- Encabezado / Header Fijo -->
+    <header class="navbar">
+        <div class="nav-brand">
+            <img src="assets/img/logo.png" alt="Logo Starr Park" class="nav-logo" onerror="this.src='https://via.placeholder.com/40/f472b6/ffffff?text=SP'">
+            <span class="nav-title" id="txt-title">Team STARPARK</span>
+        </div>
+        <button class="menu-toggle" id="btn-open-menu" aria-label="Abrir Menú">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+    </header>
+
+    <!-- Menú Lateral Deslizable (Drawer) -->
+    <aside class="sidebar-drawer" id="sidebar">
+        <div class="drawer-header">
+            <h3>Navegación</h3>
+            <div class="drawer-actions">
+                <button class="icon-btn" id="btn-config" title="Configuración"><i class="fa-solid fa-gear"></i></button>
+                <button class="icon-btn" id="btn-close-menu" title="Cerrar"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+        </div>
+        <nav class="drawer-nav">
+            <button class="nav-link active" data-target="sec-inicio"><i class="fa-solid fa-house"></i> <span class="nav-text">Inicio</span></button>
+            <button class="nav-link" data-target="sec-roster"><i class="fa-solid fa-users"></i> <span class="nav-text">Roster de Brawlers</span></button>
+            <button class="nav-link" data-target="sec-comandos"><i class="fa-solid fa-terminal"></i> <span class="nav-text">Comandos del Bot</span></button>
+            <button class="nav-link" data-target="sec-reglas"><i class="fa-solid fa-scroll"></i> <span class="nav-text">Reglamento</span></button>
+            <button class="nav-link admin-link" data-target="sec-admin"><i class="fa-solid fa-user-shield"></i> <span class="nav-text">Zona Admin</span></button>
+        </nav>
+    </aside>
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Modal de Configuración -->
+    <div class="modal" id="modal-config">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Ajustes</h3>
+                <button class="icon-btn" id="btn-close-config"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="config-option">
+                    <span>Traducción a Símbolos Rúnicos</span>
+                    <label class="switch">
+                        <input type="checkbox" id="toggle-runic">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contenido Principal SPA (Pestañas) -->
+    <main class="main-container">
+
+        <!-- 1. SECCIÓN INICIO -->
+        <section id="sec-inicio" class="app-section active">
+            <div class="hero-card">
+                <img src="assets/img/logo.png" alt="Starr Park" class="hero-logo" onerror="this.src='https://via.placeholder.com/120/f472b6/ffffff?text=STARPARK'">
+                <h1 class="hero-title" id="txt-hero-title">¡BIENVENIDO AL PARQUE!</h1>
+                <p class="hero-desc">
+                    Team STARPARK no es solo otro grupo de WhatsApp: es el punto de encuentro oficial para retas 1v1, torneos relámpago y desmadre casual. Elige a tu Brawler, respeta a los administradores y prepárate para la acción. Recuerda: aquí la diversión es obligatoria.
+                </p>
+                <a href="#" class="btn-primary"><i class="fa-brands fa-whatsapp"></i> Unirse al Grupo</a>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <i class="fa-solid fa-users"></i>
+                    <h4>+50</h4>
+                    <p>Miembros</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fa-solid fa-comments"></i>
+                    <h4>7</h4>
+                    <p>Grupos</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fa-solid fa-robot"></i>
+                    <h4>24/7</h4>
+                    <p>Bot Activo</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. SECCIÓN ROSTER -->
+        <section id="sec-roster" class="app-section">
+            <h2 class="section-title" id="txt-roster-title">ROSTER DE BRAWLERS</h2>
+            <p class="section-subtitle">Conoce a los miembros y sus roles asignados en el WhatsApp.</p>
+
+            <div class="roster-grid">
+                <!-- Perfil de Naara (Piper / Jefa) -->
+                <div class="brawler-card">
+                    <div class="brawler-avatar">
+                        <i class="fa-solid fa-umbrella"></i>
+                    </div>
+                    <div class="brawler-info">
+                        <h3>Piper</h3>
+                        <span class="role-badge admin">Jefa / Administradora</span>
+                        <p class="member-tag">@Naara</p>
+                    </div>
+                </div>
+
+                <!-- Perfil de Roberto (Gus) -->
+                <div class="brawler-card">
+                    <div class="brawler-avatar">
+                        <i class="fa-solid fa-ghost"></i>
+                    </div>
+                    <div class="brawler-info">
+                        <h3>Gus</h3>
+                        <span class="role-badge admin">Administrador</span>
+                        <p class="member-tag">@Roberto</p>
+                    </div>
+                </div>
+
+                <!-- Miembro extra de ejemplo -->
+                <div class="brawler-card">
+                    <div class="brawler-avatar">
+                        <i class="fa-solid fa-bolt"></i>
+                    </div>
+                    <div class="brawler-info">
+                        <h3>Max</h3>
+                        <span class="role-badge member">Miembro</span>
+                        <p class="member-tag">@UsuarioPro</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. SECCIÓN COMANDOS -->
+        <section id="sec-comandos" class="app-section">
+            <h2 class="section-title" id="txt-cmd-title">COMANDOS DEL BOT</h2>
+            <p class="section-subtitle">Toca cualquier comando para copiarlo directo a tu portapapeles.</p>
+
+            <div class="commands-list">
+                <div class="cmd-item" onclick="copyCommand('#play')">
+                    <div class="cmd-code">#play [nombre]</div>
+                    <div class="cmd-desc">Reproduce música o videos en el chat.</div>
+                    <i class="fa-regular fa-copy copy-icon"></i>
+                </div>
+                <div class="cmd-item" onclick="copyCommand('#tt')">
+                    <div class="cmd-code">#tt [link]</div>
+                    <div class="cmd-desc">Descarga videos de TikTok sin marca de agua.</div>
+                    <i class="fa-regular fa-copy copy-icon"></i>
+                </div>
+                <div class="cmd-item" onclick="copyCommand('#count')">
+                    <div class="cmd-code">#count</div>
+                    <div class="cmd-desc">Muestra la lista de miembros más activos del grupo.</div>
+                    <i class="fa-regular fa-copy copy-icon"></i>
+                </div>
+                <div class="cmd-item" onclick="copyCommand('#1v1')">
+                    <div class="cmd-code">#1v1 @usuario</div>
+                    <div class="cmd-desc">Lanza un reto formal para duelo en Brawl Stars.</div>
+                    <i class="fa-regular fa-copy copy-icon"></i>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. SECCIÓN REGLAS -->
+        <section id="sec-reglas" class="app-section">
+            <h2 class="section-title" id="txt-rules-title">REGLAMENTO OFICIAL</h2>
+            <p class="section-subtitle">Normas obligatorias para mantener la convivencia en Team STARPARK.</p>
+
+            <div class="rules-container">
+                <div class="rule-card">
+                    <h3><i class="fa-solid fa-heart"></i> Convivencia y Respeto</h3>
+                    <ul>
+                        <li><strong>Cero toxicidad:</strong> Trata a todos con respeto. No se tolera el acoso, los insultos, el racismo, la homofobia ni la discriminación.</li>
+                        <li><strong>Evita el drama:</strong> Las discusiones personales se resuelven por privado.</li>
+                        <li><strong>Humor sano:</strong> El humor pesado tiene límites. Si a alguien le molesta tu chiste, detente de inmediato.</li>
+                    </ul>
+                </div>
+
+                <div class="rule-card">
+                    <h3><i class="fa-solid fa-gamepad"></i> Juego Limpio y Canales</h3>
+                    <ul>
+                        <li><strong>No usar trampas:</strong> Prohibido promover o compartir hacks, scripts o cheats.</li>
+                        <li><strong>Canales correctos:</strong> Respeta la temática de cada grupo/canal.</li>
+                        <li><strong>Spoilers:</strong> Usa advertencias si vas a hablar de tramas de juegos recientes.</li>
+                    </ul>
+                </div>
+
+                <div class="rule-card">
+                    <h3><i class="fa-solid fa-shield-halved"></i> Seguridad y Privacidad</h3>
+                    <ul>
+                        <li><strong>Cuida tu información:</strong> No compartas datos personales (dirección, escuela, fotos personales).</li>
+                        <li><strong>No acoso en MD:</strong> No envíes mensajes privados no deseados.</li>
+                        <li><strong>Reporta problemas:</strong> Avisa de inmediato a los moderadores si algo sucede.</li>
+                    </ul>
+                </div>
+
+                <div class="rule-card">
+                    <h3><i class="fa-solid fa-ban"></i> Contenido Prohibido y Spam</h3>
+                    <ul>
+                        <li><strong>Contenido +18:</strong> Estrictamente prohibido (grupo apto para menores).</li>
+                        <li><strong>Cero spam:</strong> No cadenas, mayúsculas excesivas ni autopromoción sin permiso.</li>
+                        <li><strong>No al comercio:</strong> Prohibida la venta de cuentas o intercambios de dinero.</li>
+                    </ul>
+                </div>
+
+                <div class="rule-card warning-system">
+                    <h3><i class="fa-solid fa-gavel"></i> Sistema de Sanciones</h3>
+                    <div class="steps-list">
+                        <div class="step-item"><span>1</span> Primera falta: Advertencia verbal / `#warn`.</div>
+                        <div class="step-item"><span>2</span> Segunda falta: Mute temporal de 24 horas.</div>
+                        <div class="step-item"><span>3</span> Tercera falta: Expulsión definitiva (`#kick`).</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. ZONA ADMIN (PRIVADA) -->
+        <section id="sec-admin" class="app-section">
+            <h2 class="section-title" id="txt-admin-title">CUARTEL GENERAL ADMIN</h2>
+
+            <!-- Bloque de Autenticación (Visible por defecto) -->
+            <div id="admin-auth" class="auth-card">
+                <i class="fa-solid fa-lock lock-icon"></i>
+                <h3>Acceso Restringido</h3>
+                <p>Ingresa la clave de administrador para acceder a las herramientas de gestión.</p>
+                <div class="input-group">
+                    <input type="password" id="admin-pass" placeholder="Contraseña secreta">
+                    <button class="btn-primary" id="btn-login-admin">Entrar</button>
+                </div>
+                <p id="auth-error" class="error-msg"></p>
+            </div>
+
+            <!-- Panel Privado (OCULTO por defecto) -->
+            <div id="admin-panel" class="admin-panel-content hidden">
+                <div class="admin-header">
+                    <span class="status-online"><i class="fa-solid fa-circle"></i> Sesión Admin Activa</span>
+                    <button class="btn-danger-sm" id="btn-logout-admin">Cerrar Sesión</button>
+                </div>
+
+                <div class="admin-grid">
+                    <div class="admin-card">
+                        <h3><i class="fa-solid fa-clipboard-user"></i> Bitácora de Warns</h3>
+                        <textarea placeholder="Ejemplo: @UsuarioX - 1 warn por spam..." rows="4"></textarea>
+                        <button class="btn-secondary-sm">Guardar Notas</button>
+                    </div>
+
+                    <div class="admin-card">
+                        <h3><i class="fa-solid fa-bolt"></i> Comandos Rápidos Admin</h3>
+                        <div class="admin-btns">
+                            <button onclick="copyCommand('#warn @user')">#warn</button>
+                            <button onclick="copyCommand('#unwarn @user')">#unwarn</button>
+                            <button onclick="copyCommand('#kick @user')">#kick</button>
+                            <button onclick="copyCommand('#close')">#close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- JS de la App -->
+    <script src="assets/js/main.js"></script>
+</body>
+</html>
