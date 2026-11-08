@@ -1,4 +1,21 @@
 /* ==========================================
+   CARGA DE TIPOGRAFÍA RÚNICA PROPIA
+   ========================================== */
+@font-face {
+    font-family: 'MiFuenteRunica';
+    src: url('../fonts/runas.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* Aplicación del modo rúnico a todo el cuerpo de la página */
+body.runic-mode, 
+body.runic-mode * {
+    font-family: 'MiFuenteRunica', 'Segoe UI', sans-serif !important;
+    letter-spacing: 1px;
+}
+
+/* ==========================================
    VARIABLES Y ESTILOS BASE (Team STARPARK)
    ========================================== */
 :root {
@@ -386,59 +403,114 @@ input:checked + .slider:before { transform: translateX(22px); }
 }
 
 /* ==========================================
-   2. ROSTER
+   2. MIEMBROS / ROSTER (DISEÑO MEJORADO)
    ========================================== */
 .roster-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+    margin-top: 1rem;
 }
 
 .brawler-card {
-    background-color: var(--bg-card);
+    background: linear-gradient(145deg, #1e1e24 0%, #16161a 100%);
     border: 1px solid var(--border-color);
-    border-radius: 12px;
-    padding: 1rem;
+    border-radius: 16px;
+    padding: 1.25rem 1rem;
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 16px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
+/* Efecto al pasar el mouse o tocar en móvil */
+.brawler-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--primary-pink);
+    box-shadow: 0 8px 20px rgba(244, 114, 182, 0.15);
+}
+
+/* Avatares grandes y circulares con borde brillante */
 .brawler-avatar {
-    width: 50px;
-    height: 50px;
-    background-color: var(--bg-hover);
+    width: 72px;
+    height: 72px;
+    min-width: 72px;
+    background-color: var(--bg-main);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--primary-pink);
-    font-size: 1.3rem;
-    border: 1px solid var(--primary-pink);
+    border: 3px solid var(--primary-pink);
+    box-shadow: 0 0 12px rgba(244, 114, 182, 0.25);
+    overflow: hidden;
+    position: relative;
+}
+
+.brawler-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.brawler-card:hover .brawler-avatar img {
+    transform: scale(1.1);
+}
+
+/* Información del Miembro */
+.brawler-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    width: 100%;
 }
 
 .brawler-info h3 {
-    font-size: 1rem;
-    margin-bottom: 2px;
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--text-white);
+    letter-spacing: 0.5px;
+    line-height: 1.2;
 }
 
+/* Badges / Placas de Rol con más personalidad */
 .role-badge {
-    display: inline-block;
-    font-size: 0.7rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.75rem;
     font-weight: 700;
-    padding: 2px 8px;
-    border-radius: 10px;
-    margin-bottom: 4px;
+    padding: 3px 10px;
+    border-radius: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
-.role-badge.admin { background-color: rgba(244, 114, 182, 0.2); color: var(--primary-pink); }
-.role-badge.member { background-color: rgba(129, 140, 248, 0.2); color: var(--accent-purple); }
+/* Placa especial de Admin / Jefa */
+.role-badge.admin { 
+    background: linear-gradient(135deg, rgba(244, 114, 182, 0.25) 0%, rgba(236, 72, 153, 0.1) 100%); 
+    color: var(--primary-pink); 
+    border: 1px solid rgba(244, 114, 182, 0.4);
+    box-shadow: 0 0 8px rgba(244, 114, 182, 0.15);
+}
+
+/* Placa para miembros normales */
+.role-badge.member { 
+    background: linear-gradient(135deg, rgba(129, 140, 248, 0.2) 0%, rgba(99, 102, 241, 0.08) 100%); 
+    color: var(--accent-purple); 
+    border: 1px solid rgba(129, 140, 248, 0.3);
+}
 
 .member-tag {
-    font-size: 0.8rem;
+    font-size: 0.88rem;
     color: var(--text-muted);
+    font-weight: 500;
+    margin-top: 2px;
 }
-
 /* ==========================================
    3. COMANDOS
    ========================================== */
@@ -611,7 +683,6 @@ input:checked + .slider:before { transform: translateX(22px); }
     margin-top: 10px;
 }
 
-/* REGLA CRÍTICA PARA OCULTAR ELEMENTOS */
 .hidden { 
     display: none !important; 
 }
@@ -704,4 +775,29 @@ input:checked + .slider:before { transform: translateX(22px); }
     font-family: monospace;
     font-weight: 700;
     cursor: pointer;
+}
+/* Botones de Selección de Perfil Admin */
+.profile-select-btns {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 1rem;
+}
+
+.admin-greeting {
+    background: linear-gradient(135deg, rgba(244, 114, 182, 0.15) 0%, rgba(129, 140, 248, 0.1) 100%);
+    border: 1px solid var(--primary-pink);
+    padding: 1.2rem;
+    margin-bottom: 1rem;
+}
+
+.admin-greeting h3 {
+    color: var(--primary-pink);
+    font-size: 1.2rem;
+    margin-bottom: 6px;
+}
+
+.admin-greeting p {
+    color: var(--text-white);
+    font-size: 0.95rem;
 }

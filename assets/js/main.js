@@ -3,7 +3,7 @@
    ========================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Elementos del DOM
+    // 1. Elementos del DOM para Navegación
     const btnOpenMenu = document.getElementById('btn-open-menu');
     const btnCloseMenu = document.getElementById('btn-close-menu');
     const sidebar = document.getElementById('sidebar');
@@ -17,39 +17,45 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnCloseConfig = document.getElementById('btn-close-config');
     const toggleRunic = document.getElementById('toggle-runic');
 
-    // Zona Admin
+    // Zona Admin y Perfiles
     const btnLoginAdmin = document.getElementById('btn-login-admin');
     const adminPassInput = document.getElementById('admin-pass');
     const adminAuth = document.getElementById('admin-auth');
+    const adminSelectProfile = document.getElementById('admin-select-profile');
+    const profileBtns = document.querySelectorAll('.profile-btn');
     const adminPanel = document.getElementById('admin-panel');
     const authError = document.getElementById('auth-error');
     const btnLogoutAdmin = document.getElementById('btn-logout-admin');
+    const greetingTitle = document.getElementById('txt-greeting-title');
+    const greetingMsg = document.getElementById('txt-greeting-msg');
 
-    // --- FUNCIONES DE NAVEGACIÓN (SPA) ---
+    // --- FUNCIONES DEL MENÚ LATERAL (DRAWER) ---
     function openMenu() {
-        sidebar.classList.add('open');
-        overlay.classList.add('show');
+        if (sidebar && overlay) {
+            sidebar.classList.add('open');
+            overlay.classList.add('show');
+        }
     }
 
     function closeMenu() {
-        sidebar.classList.remove('open');
-        overlay.classList.remove('show');
+        if (sidebar && overlay) {
+            sidebar.classList.remove('open');
+            overlay.classList.remove('show');
+        }
     }
 
-    btnOpenMenu.addEventListener('click', openMenu);
-    btnCloseMenu.addEventListener('click', closeMenu);
-    overlay.addEventListener('click', closeMenu);
+    if (btnOpenMenu) btnOpenMenu.addEventListener('click', openMenu);
+    if (btnCloseMenu) btnCloseMenu.addEventListener('click', closeMenu);
+    if (overlay) overlay.addEventListener('click', closeMenu);
 
-    // Cambiar de Pestaña al hacer clic en el menú
+    // Cambiar de Pestaña (SPA)
     navLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
+        link.addEventListener('click', () => {
             const targetId = link.getAttribute('data-target');
 
-            // Actualizar clases activas en los enlaces
             navLinks.forEach(item => item.classList.remove('active'));
             link.classList.add('active');
 
-            // Mostrar la sección correspondiente y ocultar las demás
             sections.forEach(section => {
                 if (section.id === targetId) {
                     section.classList.add('active');
@@ -58,90 +64,96 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
 
-            // Cerrar menú en dispositivos móviles automáticamente
             closeMenu();
             window.scrollTo(0, 0);
         });
     });
 
     // --- MODAL DE CONFIGURACIÓN ---
-    btnConfig.addEventListener('click', () => {
-        modalConfig.classList.add('show');
+    if (btnConfig) {
+        btnConfig.addEventListener('click', () => {
+            closeMenu();
+            if (modalConfig) modalConfig.classList.add('show');
+        });
+    }
+
+    if (btnCloseConfig) {
+        btnCloseConfig.addEventListener('click', () => {
+            if (modalConfig) modalConfig.classList.remove('show');
+        });
+    }
+
+    if (modalConfig) {
+        modalConfig.addEventListener('click', (e) => {
+            if (e.target === modalConfig) {
+                modalConfig.classList.remove('show');
+            }
+        });
+    }
+
+    // --- MODO ESCRITURA RÚNICA ---
+    if (toggleRunic) {
+        toggleRunic.addEventListener('change', (e) => {
+            if (e.target.checked) {
+                document.body.classList.add('runic-mode');
+            } else {
+                document.body.classList.remove('runic-mode');
+            }
+        });
+    }
+
+    // --- AUTENTICACIÓN Y SELECCIÓN DE ADMIN ---
+    const ADMIN_PASSWORD = "thebestfamily"; 
+
+    if (btnLoginAdmin) {
+        btnLoginAdmin.addEventListener('click', () => {
+            const enteredPass = adminPassInput.value.trim();
+            if (enteredPass === ADMIN_PASSWORD) {
+                if (authError) authError.textContent = "";
+                if (adminAuth) adminAuth.classList.add('hidden');
+                if (adminSelectProfile) adminSelectProfile.classList.remove('hidden');
+                adminPassInput.value = "";
+            } else {
+                if (authError) authError.textContent = "Contraseña incorrecta. Intenta de nuevo.";
+                adminPassInput.value = "";
+            }
+        });
+    }
+
+    if (adminPassInput) {
+        adminPassInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                btnLoginAdmin.click();
+            }
+        });
+    }
+
+    // Clic al elegir quién eres
+    profileBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const adminType = btn.getAttribute('data-admin');
+
+            if (adminType === 'roberto') {
+                if (greetingTitle) greetingTitle.textContent = "¡Qué onda, Robert! 👻";
+                if (greetingMsg) greetingMsg.textContent = "No te proyectes amigo :(";
+            } else if (adminType === 'naara') {
+                if (greetingTitle) greetingTitle.textContent = "¡Bienvenida, Naara! 👑";
+                if (greetingMsg) greetingMsg.textContent = "¡Sesión iniciada como narita la proyectadita! Cuidado con los main rico y todo esta bien, eso espero muehehehe. ☂️✨";
+            }
+
+            if (adminSelectProfile) adminSelectProfile.classList.add('hidden');
+            if (adminPanel) adminPanel.classList.remove('hidden');
+        });
     });
 
-    btnCloseConfig.addEventListener('click', () => {
-        modalConfig.classList.remove('show');
-    });
-
-    modalConfig.addEventListener('click', (e) => {
-        if (e.target === modalConfig) {
-            modalConfig.classList.remove('show');
-        }
-    });
-
-    // --- MODO SÍMBOLOS RÚNICOS / RAROS ---
-    const textElements = {
-        title: document.getElementById('txt-title'),
-        heroTitle: document.getElementById('txt-hero-title'),
-        rosterTitle: document.getElementById('txt-roster-title'),
-        cmdTitle: document.getElementById('txt-cmd-title'),
-        rulesTitle: document.getElementById('txt-rules-title'),
-        adminTitle: document.getElementById('txt-admin-title')
-    };
-
-    const originalTexts = {
-        title: textElements.title ? textElements.title.textContent : '',
-        heroTitle: textElements.heroTitle ? textElements.heroTitle.textContent : '',
-        rosterTitle: textElements.rosterTitle ? textElements.rosterTitle.textContent : '',
-        cmdTitle: textElements.cmdTitle ? textElements.cmdTitle.textContent : '',
-        rulesTitle: textElements.rulesTitle ? textElements.rulesTitle.textContent : '',
-        adminTitle: textElements.adminTitle ? textElements.adminTitle.textContent : ''
-    };
-
-    toggleRunic.addEventListener('change', (e) => {
-        if (e.target.checked) {
-            if (textElements.title) textElements.title.textContent = "𝕾𝕿𝕬𝕽𝕻𝕬𝕽𝕼";
-            if (textElements.heroTitle) textElements.heroTitle.textContent = "¡𝕭𝕴𝕰𝕹𝖁𝕰𝕹𝕴𝕯𝕺 𝕬𝕃 𝕻𝕬𝕽𝕼𝖀𝕰!";
-            if (textElements.rosterTitle) textElements.rosterTitle.textContent = "𝕽𝕺𝕾𝕿𝕰𝕽 𝕯𝕰 𝕭𝕽𝕬𝖂𝕷𝕰𝕽𝕾";
-            if (textElements.cmdTitle) textElements.cmdTitle.textContent = "𝕮𝕺𝕸𝕬𝕹𝕯𝕺𝕾 𝕯𝕰𝕃 𝕭𝕺𝕿";
-            if (textElements.rulesTitle) textElements.rulesTitle.textContent = "𝕽𝕰𝕲𝕃𝕬𝕸𝕰𝕹𝕿𝕺 𝕺𝕱𝕴𝕮𝕴𝕬𝕃";
-            if (textElements.adminTitle) textElements.adminTitle.textContent = "𝕮𝖀𝕬𝕽𝕿𝕰𝕽 𝕬𝕯𝕸𝕴𝕲";
-        } else {
-            if (textElements.title) textElements.title.textContent = originalTexts.title;
-            if (textElements.heroTitle) textElements.heroTitle.textContent = originalTexts.heroTitle;
-            if (textElements.rosterTitle) textElements.rosterTitle.textContent = originalTexts.rosterTitle;
-            if (textElements.cmdTitle) textElements.cmdTitle.textContent = originalTexts.cmdTitle;
-            if (textElements.rulesTitle) textElements.rulesTitle.textContent = originalTexts.rulesTitle;
-            if (textElements.adminTitle) textElements.adminTitle.textContent = originalTexts.adminTitle;
-        }
-    });
-
-    // --- AUTENTICACIÓN DE ADMINISTRADORES ---
-    const ADMIN_PASSWORD = "thebestfamily"; // Contraseña actualizada
-
-    btnLoginAdmin.addEventListener('click', () => {
-        const enteredPass = adminPassInput.value.trim();
-        if (enteredPass === ADMIN_PASSWORD) {
-            authError.textContent = "";
-            adminAuth.classList.add('hidden');
-            adminPanel.classList.remove('hidden');
-            adminPassInput.value = "";
-        } else {
-            authError.textContent = "Contraseña incorrecta. Intenta de nuevo.";
-            adminPassInput.value = "";
-        }
-    });
-
-    adminPassInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-            btnLoginAdmin.click();
-        }
-    });
-
-    btnLogoutAdmin.addEventListener('click', () => {
-        adminPanel.classList.add('hidden');
-        adminAuth.classList.remove('hidden');
-    });
+    // Cerrar Sesión
+    if (btnLogoutAdmin) {
+        btnLogoutAdmin.addEventListener('click', () => {
+            if (adminPanel) adminPanel.classList.add('hidden');
+            if (adminSelectProfile) adminSelectProfile.classList.add('hidden');
+            if (adminAuth) adminAuth.classList.remove('hidden');
+        });
+    }
 });
 
 /* --- FUNCIÓN GLOBAL DE COPIADO RÁPIDO --- */
@@ -168,6 +180,6 @@ function copyCommand(text) {
             alertBox.remove();
         }, 2000);
     }).catch(err => {
-        console.error('Error al copiar al portapapeles: ', err);
+        console.error('Error al copiar: ', err);
     });
 }
